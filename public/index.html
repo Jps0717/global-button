@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Button Counter</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    button { padding: 10px 20px; font-size: 16px; }
+    .count { font-size: 24px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Press the Button</h1>
+  <button id="button">Press me!</button>
+  <div class="count">Button pressed: <span id="counter">0</span> times</div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    document.getElementById('button').addEventListener('click', () => {
+      socket.emit('buttonPressed');
+    });
+
+    socket.on('updateCount', (count) => {
+      document.getElementById('counter').innerText = count;
+    });
+  </script>
+</body>
+</html>
